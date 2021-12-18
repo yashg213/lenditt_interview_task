@@ -10,7 +10,6 @@ try {
     const { email } = req.body;
 
     if (emailRegexp.test(email)) {
-        console.log('email', email);
         if ((await userDetails(req.body.email, 'email')) === null) {
 
             let signupUser = await saveUser(req.body)
@@ -63,15 +62,10 @@ module.exports.login = async (req, res) => {
 }
 module.exports.logout = async (req, res) => {
     try {
-        console.log('my token ', req.headers.authorization)
-
     // remove token form database
     const token = req.headers.authorization.split(' ')[1];
-// jwt.verify(token)
     var decoded = jwt.verify( token, 'Test');
-console.log('decode',decoded)
     let removeToken = await userUpdateService(decoded._id, { userToken: '' });
-    console.log('remove token', removeToken)
     if (removeToken) {
         delete removeToken.password;
         delete removeToken.userToken;

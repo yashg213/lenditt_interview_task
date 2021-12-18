@@ -7,8 +7,6 @@ const {
 module.exports.signupValidation = async (req, res, next) => {
     let validationErr = "";
     try {
-        console.log('req.body',req.body)
-
         validationErr +=  isUndefined(['email', 'password', 'firstName', 'lastName', 'phoneNumber', 'countryCode'], req);
         if (validationErr === "") {
             validationErr += isEmail(req.body.email);
